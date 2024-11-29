@@ -1,0 +1,13 @@
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. -I../libloragw/inc src/util_pkt_logger.c -o obj/util_pkt_logger.o
+src/util_pkt_logger.c: In function ‘main’:
+src/util_pkt_logger.c:489:58: warning: ‘%02i’ directive writing between 2 and 11 bytes into a region of size between 0 and 16 [-Wformat-overflow=]
+             sprintf(fetch_timestamp,"%04i-%02i-%02i %02i:%02i:%02i.%03liZ",(x->tm_year)+1900,(x->tm_mon)+1,x->tm_mday,x->tm_hour,x->tm_min,x->tm_sec,(fetch_time.tv_nsec)/1000000); /* ISO 8601 format */
+                                                          ^~~~
+src/util_pkt_logger.c:489:37: note: directive argument in the range [-2147, 2147]
+             sprintf(fetch_timestamp,"%04i-%02i-%02i %02i:%02i:%02i.%03liZ",(x->tm_year)+1900,(x->tm_mon)+1,x->tm_mday,x->tm_hour,x->tm_min,x->tm_sec,(fetch_time.tv_nsec)/1000000); /* ISO 8601 format */
+                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/util_pkt_logger.c:489:13: note: ‘sprintf’ output between 25 and 79 bytes into a destination of size 30
+             sprintf(fetch_timestamp,"%04i-%02i-%02i %02i:%02i:%02i.%03liZ",(x->tm_year)+1900,(x->tm_mon)+1,x->tm_mday,x->tm_hour,x->tm_min,x->tm_sec,(fetch_time.tv_nsec)/1000000); /* ISO 8601 format */
+             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. src/parson.c -o obj/parson.o
+gcc -L../libloragw obj/util_pkt_logger.o obj/parson.o -o util_pkt_logger -lloragw -lrt -lm

@@ -1,0 +1,159 @@
+Basic communication protocol between RT-Lora gateway and server
+=============================================================
+
+
+1. Introduction
+----------------
+
+The protocol between the gateway and the server is purposefully very basic and 
+for demonstration purpose only, or for use on private and reliable networks.
+
+There is no authentication of the gateway or the server, and the acknowledges 
+are only used for network quality assessment, not to correct UDP datagrams 
+losses (no retries).
+
+
+2. System schematic and definitions
+------------------------------------
+
+	 ((( Y )))
+	     |
+	     |
+	+ - -|- - - - - - - - - - - - - +        xxxxxxxxxxxx          +--------+
+	| +--+-----------+     +------+ |       xx x  x     xxx        |        |
+	| |              |     |      | |      xx  Internet  xx        |        |
+	| | Concentrator |<--->| Host |<-------xx     or    xx-------->|        |
+	| |              | SPI |      | |      xx  Intranet  xx        | Server |
+	| +--------------+     +------+ |       xxxx   x   xxxx        |        |
+	|    ^                     ^    |           xxxxxxxx           |        |
+	|    | PPS +-------+ NMEA  |    |                              |        |
+	|    +-----|  GPS  |-------+    |                              +--------+
+	|          | (opt) |            |
+	|          +-------+            |
+	|                               |
+	|             Gateway           |
+	+- - - - - - - - - - - - - - - -+
+
+__Concentrator__: radio RX/TX board, based on Semtech multichannel modems 
+(SX130x), transceivers (SX135x) and/or low-power stand-alone modems (SX127x). 
+
+__Host__: embedded computer on which the packet forwarder is run. Drives the 
+concentrator through a SPI link.
+
+__GPS__: GNSS (GPS, Galileo, GLONASS, etc) receiver with a "1 Pulse Per Second"
+output and a serial link to the host to send NMEA frames containing time and
+geographical coordinates data. Optional.
+
+__Gateway__: a device composed of at least one radio concentrator, a host, some 
+network connection to the internet or a private network (Ethernet, 3G, Wifi, 
+microwave link), and optionally a GPS receiver for synchronization. 
+
+__Server__: an abstract computer that will process the RF packets received and 
+forwarded by the gateway, and issue RF packets in response that the gateway 
+will have to emit.
+
+It is assumed that the gateway can be behind a NAT or a firewall stopping any 
+incoming connection.
+It is assumed that the server has an static IP address (or an address solvable 
+through a DNS service) and is able to receive incoming connections on a 
+specific port.
+
+
+3. Time synchronization protocol
+---------------------
+
+### 3.1. Sequence diagram ###
+        +---------+                                                    +---------+
+	| Gateway |                                                    | Server  |
+	+---------+                                                    +---------+
+	     | -----------------------------------\                         |
+	     |-| When it needs perform time sync  |                         |
+	     | ------------------------------------                         |
+	     |                                                              |
+	     | TIMESYNC_REQ (token X, GW MAC)                               |
+	  t0 |------------------------------------------------------------->|t1
+	     |                                                              |
+	     |                               TIMESYNC_RES (token X, t1, t2) |
+	  t3 |<-------------------------------------------------------------|t2
+	     |                                                              |
+	     |                                                              |
+
+### 3.2. TIMESYNC_REQ packet ###
+That packet type is used by the gateway to request time sync to the server.
+
+  Bytes  | Function
+:------:|---------------------------------------------------------------------
+ 0      | (1 byte) protocol version = 2
+ 1-2    | (2 byte) random token
+ 3      | (1 byte) Time sync request identifier 0x00
+ 4-11   | (8 bytes) Gateway unique identifier (MAC address)
+
+### 3.3. TIMESYNC_RES packet ###
+That packet type is used by the server to send time sync response to the gateway. It includes
+timestamp information for t1 and t2.
+
+  Bytes  | Function
+:------:|---------------------------------------------------------------------
+ 0      | (1 byte) protocol version = 2
+ 1-2    | (2 byte) same token as the PKT_TIMESYNC_REQ packet
+ 3      | (1 byte) Time sync response identifier 0x01
+ 4-7    | (4 bytes) The server's timestamp in seconds of the request packet reception (t1.sec)
+ 8-11   | (4 bytes) The server's timestamp in milliseconds of the request packet reception (t1.usec)
+ 12-15  | (4 bytes) The server's timestamp in seconds of the response packet transmission (t2.sec)
+ 16-19  | (4 bytes) The server's timestamp in milliseconds of the response packet transmission (t2.usec)
+
+
+4. Upstream protocol
+---------------------
+
+### 4.1. Sequence diagram ###
+
+	+---------+                                                    +---------+
+	| Gateway |                                                    | Server  |
+	+---------+                                                    +---------+
+	     | -----------------------------------\                         |
+	     |-| When 1-N RF packets are received |                         |
+	     | ------------------------------------                         |
+	     |                                                              |
+	     | PUSH_DATA (token Y, GW MAC, payload)                         |
+	     |------------------------------------------------------------->|
+	     |                                                              |
+	     |                                             ---------------\ |
+	     |                                            | process packets |
+	     |                                             ---------------- |
+	     |                                                              |
+
+### 3.2. PUSH_DATA packet ###
+
+That packet type is used by the gateway mainly to forward the RF packets 
+received, and associated metadata, to the server.
+
+ Bytes  | Function
+:------:|---------------------------------------------------------------------
+ 0      | protocol version = 2
+ 1-2    | random token
+ 3      | PUSH_DATA identifier 0x00
+ 4-11   | Gateway unique identifier (MAC address)
+ 12-end | LoRa RX Frame (See section 3.3
+
+### 3.3. LoRa RX Frame ###
+typedef struct NetworkInfo{
+	uint8_t gatewayID[8];		//   8 bytes - ex) AA555A0000000001
+	uint32_t freq;				//   4 bytes - ex) 921100000 (921.1MHz)
+	int16_t rssi;				//   2 bytes
+	int16_t snr;				//   2 bytes - ex) 0.8 --> 8 (10x)
+	uint8_t cr;					//   1 byte  - ex) 4/5 ~ 4/8
+	uint8_t sf;					//   1 byte  - ex) SF7 ~ SF12
+	uint8_t bw;					//   1 byte  - ex) SF7 ~ SF12	
+	uint8_t padding[1];			//   2 bytes padding
+}NetworkInfo_t;					//  20 bytes
+
+typedef struct LoRaRxFrameInfo{
+	uint8_t	startOfFrame;				//   1 byte
+	uint8_t size;				//   1 bytes - ex) Only LoRaFrame Size
+	uint8_t timestamp[17];		//  17 bytes - ex) 20190301 09:10:00
+	uint8_t padding;
+	NetworkInfo_t netInfo;		//  20 bytes
+	uint8_t loraframe[256];		// 256 bytes - Maxium 256 bytes..
+	uint8_t endOfFrame;
+}LoRaRxFrameInfo_t;

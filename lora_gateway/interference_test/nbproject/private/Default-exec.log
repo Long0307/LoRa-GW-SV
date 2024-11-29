@@ -1,0 +1,41 @@
+called: /usr/bin/gcc
+	/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/interference_test
+	/usr/bin/gcc
+	-c
+	-O2
+	-Wall
+	-Wextra
+	-std=c99
+	-Iinc
+	-I.
+	-I../libloragw/inc
+	src/util_pkt_logger.c
+	-o
+	obj/util_pkt_logger.o
+
+called: /usr/bin/gcc
+	/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/interference_test
+	/usr/bin/gcc
+	-c
+	-O2
+	-Wall
+	-Wextra
+	-std=c99
+	-Iinc
+	-I.
+	src/parson.c
+	-o
+	obj/parson.o
+
+called: /usr/bin/gcc
+	/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/interference_test
+	/usr/bin/gcc
+	-L../libloragw
+	obj/util_pkt_logger.o
+	obj/parson.o
+	-o
+	util_pkt_logger
+	-lloragw
+	-lrt
+	-lm
+

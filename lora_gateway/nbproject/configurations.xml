@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="libloragw">
+        <df name="src">
+          <in>loragw_aux.c</in>
+          <in>loragw_fpga.c</in>
+          <in>loragw_gps.c</in>
+          <in>loragw_hal.c</in>
+          <in>loragw_lbt.c</in>
+          <in>loragw_radio.c</in>
+          <in>loragw_reg.c</in>
+          <in>loragw_spi.native.c</in>
+        </df>
+        <df name="tst">
+          <in>test_loragw_cal.c</in>
+          <in>test_loragw_gps.c</in>
+          <in>test_loragw_hal.c</in>
+          <in>test_loragw_reg.c</in>
+          <in>test_loragw_spi.c</in>
+        </df>
+      </df>
+      <df name="util_lbt_test">
+        <df name="src">
+          <in>util_lbt_test.c</in>
+        </df>
+      </df>
+      <df name="util_pkt_logger">
+        <df name="src">
+          <in>parson.c</in>
+          <in>util_pkt_logger.c</in>
+        </df>
+      </df>
+      <df name="util_spectral_scan">
+        <df name="src">
+          <in>util_spectral_scan.c</in>
+        </df>
+      </df>
+      <df name="util_spi_stress">
+        <df name="src">
+          <in>util_spi_stress.c</in>
+        </df>
+      </df>
+      <df name="util_tx_continuous">
+        <df name="src">
+          <in>util_tx_continuous.c</in>
+        </df>
+      </df>
+      <df name="util_tx_test">
+        <df name="src">
+          <in>util_tx_test.c</in>
+        </df>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-O2 -std=c99"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir></buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <folder path="0/libloragw">
+        <cTool>
+          <incDir>
+            <pElem>libloragw/inc</pElem>
+            <pElem>libloragw</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="0/util_lbt_test">
+        <cTool>
+          <incDir>
+            <pElem>util_lbt_test/inc</pElem>
+            <pElem>util_lbt_test</pElem>
+            <pElem>libloragw/inc</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="0/util_pkt_logger">
+        <cTool>
+          <incDir>
+            <pElem>util_pkt_logger/inc</pElem>
+            <pElem>util_pkt_logger</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="0/util_spectral_scan">
+        <cTool>
+          <incDir>
+            <pElem>util_spectral_scan/inc</pElem>
+            <pElem>libloragw/inc</pElem>
+            <pElem>util_spectral_scan</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="0/util_spi_stress">
+        <cTool>
+          <incDir>
+            <pElem>util_spi_stress/inc</pElem>
+            <pElem>util_spi_stress</pElem>
+            <pElem>libloragw/inc</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="0/util_tx_continuous">
+        <cTool>
+          <incDir>
+            <pElem>util_tx_continuous/inc</pElem>
+            <pElem>util_tx_continuous</pElem>
+            <pElem>libloragw/inc</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="0/util_tx_test">
+        <cTool>
+          <incDir>
+            <pElem>util_tx_test/inc</pElem>
+            <pElem>util_tx_test</pElem>
+            <pElem>libloragw/inc</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <item path="libloragw/src/loragw_aux.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/src/loragw_fpga.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/src/loragw_gps.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/src/loragw_hal.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/src/loragw_lbt.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/src/loragw_radio.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/src/loragw_reg.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/src/loragw_spi.native.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/tst/test_loragw_cal.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/tst/test_loragw_gps.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/tst/test_loragw_hal.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/tst/test_loragw_reg.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="libloragw/tst/test_loragw_spi.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="util_lbt_test/src/util_lbt_test.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="util_pkt_logger/src/parson.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="util_pkt_logger/src/util_pkt_logger.c"
+            ex="false"
+            tool="0"
+            flavor2="3">
+        <cTool flags="0">
+          <incDir>
+            <pElem>libloragw/inc</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="util_spectral_scan/src/util_spectral_scan.c"
+            ex="false"
+            tool="0"
+            flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="util_spi_stress/src/util_spi_stress.c"
+            ex="false"
+            tool="0"
+            flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="util_tx_continuous/src/util_tx_continuous.c"
+            ex="false"
+            tool="0"
+            flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="util_tx_test/src/util_tx_test.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

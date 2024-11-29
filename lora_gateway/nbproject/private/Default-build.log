@@ -1,0 +1,71 @@
+/usr/bin/make all -e -C libloragw
+make[1]: Entering directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/libloragw'
+*** Checking libloragw library configuration ***
+#File initialization
+# Release version
+Release version   : 5.0.1
+# Debug options
+# end of file
+*** Configuration seems ok ***
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. src/loragw_hal.c -o obj/loragw_hal.o
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. src/loragw_gps.c -o obj/loragw_gps.o
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. src/loragw_reg.c -o obj/loragw_reg.o
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. src/loragw_spi.native.c -o obj/loragw_spi.o
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. src/loragw_aux.c -o obj/loragw_aux.o
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. src/loragw_radio.c -o obj/loragw_radio.o
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. src/loragw_fpga.c -o obj/loragw_fpga.o
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. src/loragw_lbt.c -o obj/loragw_lbt.o
+ar rcs libloragw.a obj/loragw_hal.o obj/loragw_gps.o obj/loragw_reg.o obj/loragw_spi.o obj/loragw_aux.o obj/loragw_radio.o obj/loragw_fpga.o obj/loragw_lbt.o
+gcc -O2 -Wall -Wextra -std=c99 -Iinc -I. -L. tst/test_loragw_spi.c -o test_loragw_spi -lloragw -lrt -lm
+gcc -O2 -Wall -Wextra -std=c99 -Iinc -I. -L. tst/test_loragw_reg.c -o test_loragw_reg -lloragw -lrt -lm
+gcc -O2 -Wall -Wextra -std=c99 -Iinc -I. -L. tst/test_loragw_hal.c -o test_loragw_hal -lloragw -lrt -lm
+gcc -O2 -Wall -Wextra -std=c99 -Iinc -I. -L. tst/test_loragw_gps.c -o test_loragw_gps -lloragw -lrt -lm
+gcc -O2 -Wall -Wextra -std=c99 -Iinc -I. -L. tst/test_loragw_cal.c -o test_loragw_cal -lloragw -lrt -lm
+make[1]: Leaving directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/libloragw'
+/usr/bin/make all -e -C util_pkt_logger
+make[1]: Entering directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_pkt_logger'
+mkdir -p obj
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. -I../libloragw/inc src/util_pkt_logger.c -o obj/util_pkt_logger.o
+src/util_pkt_logger.c: In function ‘main’:
+src/util_pkt_logger.c:489:58: warning: ‘%02i’ directive writing between 2 and 11 bytes into a region of size between 0 and 16 [-Wformat-overflow=]
+             sprintf(fetch_timestamp,"%04i-%02i-%02i %02i:%02i:%02i.%03liZ",(x->tm_year)+1900,(x->tm_mon)+1,x->tm_mday,x->tm_hour,x->tm_min,x->tm_sec,(fetch_time.tv_nsec)/1000000); /* ISO 8601 format */
+                                                          ^~~~
+src/util_pkt_logger.c:489:37: note: directive argument in the range [-2147, 2147]
+             sprintf(fetch_timestamp,"%04i-%02i-%02i %02i:%02i:%02i.%03liZ",(x->tm_year)+1900,(x->tm_mon)+1,x->tm_mday,x->tm_hour,x->tm_min,x->tm_sec,(fetch_time.tv_nsec)/1000000); /* ISO 8601 format */
+                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/util_pkt_logger.c:489:13: note: ‘sprintf’ output between 25 and 79 bytes into a destination of size 30
+             sprintf(fetch_timestamp,"%04i-%02i-%02i %02i:%02i:%02i.%03liZ",(x->tm_year)+1900,(x->tm_mon)+1,x->tm_mday,x->tm_hour,x->tm_min,x->tm_sec,(fetch_time.tv_nsec)/1000000); /* ISO 8601 format */
+             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. src/parson.c -o obj/parson.o
+gcc -L../libloragw obj/util_pkt_logger.o obj/parson.o -o util_pkt_logger -lloragw -lrt -lm
+make[1]: Leaving directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_pkt_logger'
+/usr/bin/make all -e -C util_spi_stress
+make[1]: Entering directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_spi_stress'
+mkdir -p obj
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. -I../libloragw/inc src/util_spi_stress.c -o obj/util_spi_stress.o
+gcc -L../libloragw obj/util_spi_stress.o -o util_spi_stress -lloragw -lrt -lm
+make[1]: Leaving directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_spi_stress'
+/usr/bin/make all -e -C util_tx_test
+make[1]: Entering directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_tx_test'
+mkdir -p obj
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. -I../libloragw/inc src/util_tx_test.c -o obj/util_tx_test.o
+gcc -L../libloragw obj/util_tx_test.o -o util_tx_test -lloragw -lrt -lm
+make[1]: Leaving directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_tx_test'
+/usr/bin/make all -e -C util_lbt_test
+make[1]: Entering directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_lbt_test'
+mkdir -p obj
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. -I../libloragw/inc src/util_lbt_test.c -o obj/util_lbt_test.o
+gcc -L../libloragw obj/util_lbt_test.o -o util_lbt_test -lloragw -lrt -lm
+make[1]: Leaving directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_lbt_test'
+/usr/bin/make all -e -C util_tx_continuous
+make[1]: Entering directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_tx_continuous'
+mkdir -p obj
+gcc -c -O2 -Wall -Wextra -std=c99 -Iinc -I. -I../libloragw/inc src/util_tx_continuous.c -o obj/util_tx_continuous.o
+gcc -L../libloragw obj/util_tx_continuous.o -o util_tx_continuous -lloragw -lrt -lm
+make[1]: Leaving directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_tx_continuous'
+/usr/bin/make all -e -C util_spectral_scan
+make[1]: Entering directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_spectral_scan'
+mkdir -p obj
+gcc -c -O2 -Wall -Wextra -std=c99 -I inc -I../libloragw/inc src/util_spectral_scan.c -o obj/util_spectral_scan.o
+gcc -L../libloragw obj/util_spectral_scan.o -lloragw -lrt -o util_spectral_scan
+make[1]: Leaving directory '/home/pi/lamhq/TwoHopLoRaNet/lora_gateway/util_spectral_scan'

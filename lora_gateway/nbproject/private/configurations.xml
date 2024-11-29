@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="fpga">
+      </df>
+      <df name="interference_test">
+        <df name="inc">
+          <in>parson.h</in>
+        </df>
+        <df name="obj">
+        </df>
+        <df name="src">
+          <in>parson.c</in>
+          <in>util_pkt_logger.c</in>
+        </df>
+      </df>
+      <df name="libloragw">
+        <df name="inc">
+          <in>config.h</in>
+          <in>loragw_aux.h</in>
+          <in>loragw_fpga.h</in>
+          <in>loragw_gps.h</in>
+          <in>loragw_hal.h</in>
+          <in>loragw_lbt.h</in>
+          <in>loragw_radio.h</in>
+          <in>loragw_reg.h</in>
+          <in>loragw_spi.h</in>
+          <in>loragw_sx125x.h</in>
+          <in>loragw_sx1272_fsk.h</in>
+          <in>loragw_sx1272_lora.h</in>
+          <in>loragw_sx1276_fsk.h</in>
+          <in>loragw_sx1276_lora.h</in>
+        </df>
+        <df name="obj">
+        </df>
+        <df name="src">
+          <in>agc_fw.var</in>
+          <in>arb_fw.var</in>
+          <in>cal_fw.var</in>
+          <in>loragw_aux.c</in>
+          <in>loragw_fpga.c</in>
+          <in>loragw_gps.c</in>
+          <in>loragw_hal.c</in>
+          <in>loragw_lbt.c</in>
+          <in>loragw_radio.c</in>
+          <in>loragw_reg.c</in>
+          <in>loragw_spi.native.c</in>
+        </df>
+        <df name="tst">
+          <in>test_loragw_cal.c</in>
+          <in>test_loragw_gps.c</in>
+          <in>test_loragw_hal.c</in>
+          <in>test_loragw_reg.c</in>
+          <in>test_loragw_spi.c</in>
+        </df>
+      </df>
+      <df name="util_lbt_test">
+        <df name="obj">
+        </df>
+        <df name="src">
+          <in>util_lbt_test.c</in>
+        </df>
+      </df>
+      <df name="util_pkt_logger">
+        <df name="inc">
+          <in>parson.h</in>
+        </df>
+        <df name="obj">
+        </df>
+        <df name="src">
+          <in>parson.c</in>
+          <in>util_pkt_logger.c</in>
+        </df>
+      </df>
+      <df name="util_spectral_scan">
+        <df name="obj">
+        </df>
+        <df name="src">
+          <in>util_spectral_scan.c</in>
+        </df>
+      </df>
+      <df name="util_spi_stress">
+        <df name="obj">
+        </df>
+        <df name="src">
+          <in>util_spi_stress.c</in>
+        </df>
+      </df>
+      <df name="util_tx_continuous">
+        <df name="obj">
+        </df>
+        <df name="src">
+          <in>util_tx_continuous.c</in>
+        </df>
+      </df>
+      <df name="util_tx_test">
+        <df name="obj">
+        </df>
+        <df name="src">
+          <in>util_tx_test.c</in>
+        </df>
+      </df>
+    </df>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>
